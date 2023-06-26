@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+if test     "$1" -ne dgst \
+    -o      "$2" -ne -sha1 \
+    -o      "$3" -ne -sign \
+    -o -z   "$4" \
+    -o      "$5" -ne -out \
+    -o -z   "$6" \
+    -o -z   "$7" \
+; then
+    exec /usr/bin/openssl "$@"
+fi
+
+privkey="$4"
+sig="$6"
+i="$7"
+
+printf 'privkey=%s sig=%s i=%s\n' "$privkey" "$sig" "$i" >&2
+exit 1
+exec qrexec-client-vm @default woju.AbuildSign+"$(basename "$privkey")" < "$i" > "$sig"

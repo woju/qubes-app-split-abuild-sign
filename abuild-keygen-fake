@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+qrexec-client-vm @default woju.AbuildSignListKeys | while read key; do
+    privkey="$HOME/.abuild/$key"
+    touch "$privkey" "$privkey.pub"
+done

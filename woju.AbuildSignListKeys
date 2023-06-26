@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+for file in /home/user/QubesAbuild/*.rsa
+do
+    test -r "$file" || continue
+    printf %s\\n "$file"
+done

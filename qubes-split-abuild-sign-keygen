@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+test -n "$PACKAGER"
+emailaddr=${PACKAGER##*<}
+emailaddr=${PACKAGER%%>*}
+
+privkey="$emailaddr-$(printf %x $(date +%s)).rsa"
+pubkey="$privkey.pub"
+
+mkdir -p $HOME/QubesAbuild
+(
+    umask 0007
+    openssl genrsa -out "$privkey" 4096
+)
+openssl rsa -in "$privkey" -pubout -out "$pubkey"

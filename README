@@ -1,0 +1,13 @@
+SETUP:
+- copy to alpine-build:
+    - openssl
+    - abuild-keygen-fake
+
+- copy to alpine-build-vault:
+    - qrexec services
+    - qubes-split-abuild-sign-keygen
+
+- run qubes-split-abuild-sign-keygen in alpine-build-vault
+- add qrexec policy for woju.AbuildSign+<keyid> and woju.AbuildSignListKeys
+- run abuild-keygen-fake in alpine-build
+- set matching PACKAGER envvar in alpine-build
